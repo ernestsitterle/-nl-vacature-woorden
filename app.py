@@ -106,7 +106,7 @@ filtered = filtered[filtered["Frequentie"] >= int(min_freq)]
 
 if zoek:
     filtered = freq_df[freq_df["Woord"].str.contains(zoek.lower(), na=False)]
-    st.info(f"Zoekresultaten voor **'{zoek}'**: {len(filtered)} woorden gevonden")
+    st.info(f"{len(filtered)} woorden gevonden die '{zoek}' bevatten")
 
 # ── Kolommen op basis van toggle ─────────────────────────────────────────────
 if show_translation and "Translation" in freq_df.columns:
