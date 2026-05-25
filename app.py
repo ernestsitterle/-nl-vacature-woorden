@@ -9,6 +9,7 @@ from collections import Counter
 import pandas as pd
 import streamlit as st
 
+
 # ── Stop words ───────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_stopwords():
@@ -16,8 +17,8 @@ def load_stopwords():
         "de", "en", "van", "een", "het", "in", "is", "dat", "op", "te",
         "voor", "met", "zijn", "er", "maar", "om", "aan", "ook", "als",
         "bij", "dan", "of", "uit", "door", "naar", "die", "dit", "niet",
-        "ze", "we", "je", "hij", "zij", "ik", "we", "u", "uw", "hun",
-        "hen", "onze", "ons", "mijn", "jouw", "zijn", "haar", "heeft",
+        "ze", "we", "je", "hij", "zij", "ik", "u", "uw", "hun",
+        "hen", "onze", "ons", "mijn", "jouw", "haar", "heeft",
         "hebben", "wordt", "worden", "was", "waren", "kan", "kunnen",
         "zal", "zullen", "moet", "moeten", "mogen", "wil", "willen",
         "meer", "zo", "nog", "al", "wel", "geen", "wat", "wie", "hoe",
@@ -26,28 +27,33 @@ def load_stopwords():
         "the", "and", "or", "for", "with", "you", "your", "will", "have",
         "this", "that", "are", "from", "our", "its", "been", "has",
         "were", "they", "their", "which", "who", "all", "can", "not",
-        "je", "jij", "mee", "toe", "ben", "erg", "elk", "elke",
+        "jij", "mee", "toe", "ben", "erg", "elk", "elke",
         "ander", "andere", "beiden", "veel", "weinig", "reeds", "deze",
-        "hem", "men", "iets", "niets", "alles", "ieder", "iedere", "wij", "jou"
+        "hem", "men", "iets", "niets", "alles", "ieder", "iedere", "wij", "jou", "bent"
     }
+
 
 # ── Word frequency ───────────────────────────────────────────────────────────
 @st.cache_data
 def compute_word_freq(df: pd.DataFrame) -> pd.DataFrame:
     try:
-        result = pd.read_csv("words_nl_translated_fixed_v3.csv")
+        result = pd.read_csv("words_nl_translated-5.csv")
+        stops = load_stopwords()
+        result = result[~result["Woord"].isin(stops)].head(1000)
+        result = result.reset_index(drop=True)
         result.index = result.index + 1
         return result
     except FileNotFoundError:
         pass
-    all_text = " ".join(df["job_description"].dropna()).lower()
+    all_text = " ".join(df["Job Description"].dropna()).lower()
     tokens = re.findall(r"\b[a-zàáâãäåæçèéêëìíîïðñòóôõöùúûüý]{3,}\b", all_text)
     stops = load_stopwords()
     tokens = [t for t in tokens if t not in stops]
-    freq = Counter(tokens).most_common(1000)
+    freq = Counter(tokens).most_common(10000)
     result = pd.DataFrame(freq, columns=["Woord", "Frequentie"])
     result.index = result.index + 1
     return result
+
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -64,7 +70,9 @@ st.title("🇳🇱 Top 1000 woorden in Nederlandse vacatures")
 def load_data():
     df = pd.read_csv("jobs_nl.csv")
     df["date_posted"] = pd.to_datetime(df["date_posted"]).dt.strftime("%Y-%m-%d")
+    df.columns = [col.replace("_", " ").title() for col in df.columns]
     return df
+
 
 try:
     df_jobs = load_data()
@@ -74,7 +82,7 @@ except FileNotFoundError:
 
 st.markdown(
     f"Analyse van **{len(df_jobs):,}** vacatureteksten van de Nederlandse arbeidsmarkt. "
-    "Ideaal voor het leren van zakelijk Nederlands!"
+    "Bekijk de meest gebruikte woorden!"
 )
 
 freq_df = compute_word_freq(df_jobs)
@@ -82,15 +90,15 @@ freq_df = compute_word_freq(df_jobs)
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.header("⚙️ Filters")
-    top_n     = st.slider("Aantal woorden", 10, 1000, 100, step=10)
-    min_freq  = st.number_input("Min. frequentie", min_value=1, value=3)
-    weergave  = st.radio("Weergave", ["📊 Tabel", "📈 Grafiek"])
+    top_n    = st.slider("Aantal woorden", 10, 1000, 100, step=10)
+    min_freq = st.number_input("Min. frequentie", min_value=1, value=3)
+    weergave = st.radio("Weergave", ["📊 Tabel", "📈 Grafiek"])
     st.divider()
     zoek = st.text_input("🔍 Zoek woord", placeholder="bijv. ervaring")
     st.divider()
     show_translation = st.toggle("🇬🇧 Toon Engelse vertaling", value=True)
     st.divider()
-    st.caption(f"Bron: JSearch API\n{len(df_jobs)} \n vacatures · NL filter")
+    st.caption(f"Bron: JSearch API\n{len(df_jobs)} vacatures · NL filter")
 
 # ── Filter ───────────────────────────────────────────────────────────────────
 filtered = freq_df.head(top_n)
@@ -101,7 +109,7 @@ if zoek:
     st.info(f"Zoekresultaten voor **'{zoek}'**: {len(filtered)} woorden gevonden")
 
 # ── Kolommen op basis van toggle ─────────────────────────────────────────────
-if show_translation:
+if show_translation and "Translation" in freq_df.columns:
     cols = ["Woord", "Translation", "Frequentie"]
 else:
     cols = ["Woord", "Frequentie"]
@@ -120,7 +128,7 @@ st.markdown("""
 }
 [data-testid="stMetricLabel"] { font-size: 0.85rem; color: #666; }
 [data-testid="stMetricValue"] { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; }
-</style
+</style>
 """, unsafe_allow_html=True)
 
 c1, c2, c3, c4 = st.columns(4)
@@ -151,7 +159,7 @@ if weergave == "📊 Tabel":
     )
     with st.expander("📋 Brondata — bekijk alle vacatures"):
         st.dataframe(
-            df_jobs[["job_title", "employer_name", "job_city", "date_posted", "job_description"]],
+            df_jobs[["Job Title", "Employer Name", "Job City", "Date Posted", "Job Description"]],
             use_container_width=True,
             height=400,
         )
@@ -163,7 +171,7 @@ else:
     st.bar_chart(chart_data, height=450)
     with st.expander("📋 Brondata — bekijk alle vacatures"):
         st.dataframe(
-            df_jobs[["job_title", "employer_name", "job_city", "date_posted", "job_description"]],
+            df_jobs[["Job Title", "Employer Name", "Job City", "Date Posted", "Job Description"]],
             use_container_width=True,
             height=400,
         )

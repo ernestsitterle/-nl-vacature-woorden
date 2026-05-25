@@ -1,17 +1,16 @@
-Woord,Translation,Frequentie
-werken,to work / operate,432
-ervaring,experience / expertise,336
-werk,work / job,308
+﻿Woord,Translation,Frequentie
+werken,to work,432
+ervaring,experience,336
+werk,work,308
 team,team,297
 collega,colleague,286
-bent,are,286
 samen,together,257
 data,data,245
 werkt,works,224
-functie,role / position,224
+functie,function/role,224
 hebt,have,208
 goed,good,206
-zoals,like / such as,198
+zoals,such as,198
 jou,you,197
 uur,hour,190
 nederland,Netherlands,186
@@ -31,7 +30,7 @@ ruimte,space/room,132
 projecten,projects,122
 rol,role,122
 nieuwe,new,120
-graag,gladly / with pleasure,118
+graag,gladly/please,118
 verder,further,118
 klanten,customers,118
 goede,good,115
@@ -76,12 +75,12 @@ kun,can,80
 hier,here,79
 klant,customer,79
 zelfstandig,independently,79
-werkzaamheden,tasks / duties,77
+werkzaamheden,activities/duties,77
 waarin,in which,76
 bouwen,to build,76
 complexe,complex,76
 nederlandse,Dutch,75
-ervoor,for it / in front of it,75
+ervoor,for it,75
 medewerker,employee,73
 extra,extra,73
 impact,impact,73
@@ -129,7 +128,7 @@ groeien,to grow,58
 engineer,engineer,58
 altijd,always,57
 denkniveau,thinking level,57
-werkervaring,experience,57
+werkervaring,work experience,57
 zodat,so that,57
 taken,tasks,56
 sterke,strong,56
@@ -157,7 +156,7 @@ cao,collective labour agreement,51
 weten,to know,51
 kansen,opportunities,50
 zelf,self,50
-samenwerken,collaborate,50
+samenwerken,to collaborate,50
 systemen,systems,50
 relevante,relevant,49
 eisen,requirements,49
@@ -199,7 +198,7 @@ sollicitatie,application,43
 expertise,expertise,43
 helpt,helps,43
 volgende,next/following,43
-werkomgeving,workplace,43
+werkomgeving,work environment,43
 pré,advantage/bonus,43
 budget,budget,43
 trainingen,trainings,42
@@ -313,7 +312,7 @@ aantal,number of,31
 heel,very/whole,31
 overzicht,overview,31
 optimaliseren,to optimise,31
-werkweek,workweek,31
+werkweek,working week,31
 denken,to think,31
 domein,domain,31
 materieel,material/equipment,31
@@ -338,7 +337,7 @@ realiseren,to realise,29
 affiniteit,affinity,29
 maandsalaris,monthly salary,29
 maandag,Monday,29
-werksfeer,atmosphere,29
+werksfeer,work atmosphere,29
 aantoonbare,demonstrable,29
 continu,continuous,29
 regio,region,29
@@ -401,7 +400,7 @@ organiseren,to organise,26
 levert,delivers,26
 resultaten,results,26
 investeren,to invest,26
-gegevens,data / details,26
+gegevens,data/information,26
 dashboards,dashboards,26
 chauffeur,driver,26
 hetzelfde,the same,25
@@ -964,7 +963,7 @@ gelijke,equal,11
 projectmanagers,project managers,11
 bachelor,bachelor,11
 office,office,11
-leidinggevende,manager / supervisor,11
+leidinggevende,manager/superior,11
 extern,external,11
 privé,private,11
 adv,ADV (time-off-in-lieu),11
@@ -999,3 +998,5 @@ zaak,case/matter,11
 strategische,strategic,11
 netwerken,networks,11
 maatschappij,society,11
+toepassen,to apply,11
+hart,heart,11
