@@ -1,0 +1,26 @@
+bundle:
+  name: nl-vacature-woorden
+
+resources:
+  jobs:
+    vacature_woorden_job:
+      name: nl-vacature-woorden-job
+
+      tasks:
+        - task_key: run_main
+          notebook_task:
+            notebook_path: ./demo.ipynb
+          environment_key: default
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "4"
+
+targets:
+  dev:
+    default: true
+    mode: development
+
+    workspace:
+      host: https://dbc-a32877ad-59e8.cloud.databricks.com
